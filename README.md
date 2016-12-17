@@ -7,6 +7,8 @@ or just download yuvplayer.
 
 #q1
 q1 is for lab4.1.
+
 run it: ./q1
-then input 1 to run image morphing, or input 2 to run image addition.
+
+then follow the requirement shown on screen to input 1 to run image morphing, or input 2 to run image addition.
 
