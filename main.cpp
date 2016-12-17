@@ -12,14 +12,13 @@ int main()
 	int height = 1920;
 	int width = 1080;
 	int* argb_pic;
-	char* yuv_pic = new char[height*width*3];
+	char* yuv_pic = new char[(height*width*3)>>1];
+	int char_num = (height*width*3)>>1;
 	ifstream fin;
 	fin.open("dem1.yuv",ios::binary);
 	char output_name[6] = "q1_n";
-	int char_num = 0;
-	while(fin>>yuv_pic[char_num++]);
+	for(int i = 0;i<char_num;i++)fin>>yuv_pic[i];
 	fin.close();
-	printf("char num=%d\n",char_num);
 	ofstream fout;
 	for(int A=1;A<256;A=A+3)
 	{
