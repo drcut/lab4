@@ -14,12 +14,12 @@ int main()
 	int* argb_pic;
 	char* yuv_pic = new char[height*width*3];
 	ifstream fin;
-	fin.open("dem1.yuv");
+	fin.open("dem1.yuv",ios::binary);
 	char output_name[6] = "q1_n";
-	int i = 0;
 	int char_num = 0;
-	while(fin>>yuv_pic[i++])char_num++;
+	while(fin>>yuv_pic[char_num++]);
 	fin.close();
+	printf("char num=%d\n",char_num);
 	ofstream fout;
 	for(int A=1;A<256;A=A+3)
 	{
@@ -27,7 +27,7 @@ int main()
 		argb_pic = YUV2ARGB(yuv_pic,1080,1920,A);
 		printf("ARGB2YUV\n");
 		yuv_pic =  ARGB2YUV(argb_pic,1080,1920);
-		fout.open("q1_out.yuv");
+		fout.open("q1_out.yuv",ios::binary);
 		for(int i = 0;i<char_num;i++)fout<<yuv_pic[i];
 		fout.close();
 		return 0;
