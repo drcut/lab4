@@ -26,9 +26,10 @@
    
         u = data[offset+k  ]&0xff;  
         v = data[offset+k+width]&0xff;  
+        /*
         u = u-128;  
         v = v-128;  
-   
+        */
         pixels[i  ] = convertYUVtoARGB(y1, u, v ,alpha);  
         pixels[i+1] = convertYUVtoARGB(y2, u, v,alpha);  
         pixels[width+i  ] = convertYUVtoARGB(y3, u, v,alpha);  
