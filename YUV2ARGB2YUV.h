@@ -1,8 +1,11 @@
 void convert(char *yuv_pic, char y, char u, char v, int width, int height,int offset,int i, int k, int alpha, int cnt) {
     float r,g,b;
-    r = y+1.140*v;
+    /*r = y+1.140*v;
     g = y-0.394*u-0.581*v;
-    b = y+2.032*u;
+    b = y+2.032*u;*/
+    r = 1.164383 * (y - 16) + 1.596027*(v - 128);
+    b = 1.164383 * (y - 16) + 2.017232*(u - 128);
+    g = 1.164383 * (y - 16) - 0.391762*(u - 128) - 0.812968*(v - 128);
     //r = r>255? 255 : r<0 ? 0 : r;
     //g = g>255? 255 : g<0 ? 0 : g;
     //b = b>255? 255 : b<0 ? 0 : b;
@@ -10,12 +13,15 @@ void convert(char *yuv_pic, char y, char u, char v, int width, int height,int of
     g=(alpha*g)/256;
     b=(alpha*b)/256;
      
-    char y2 = 0.299*r+0.587*g+0.114*b;
+    //char y2 = 0.299*r+0.587*g+0.114*b;
+    char y2= 0.256788*r + 0.504129*g + 0.097906*b + 16;
     yuv_pic[i] = y2;
     //4 y blocks set one u and v
     if(cnt == 4){
-        char u2 = 0.492*(b-y2);
-        char v2 = 0.877*(r-y2);
+        //char u2 = 0.492*(b-y2);
+        //char v2 = 0.877*(r-y2);
+        char u2= -0.148223*r - 0.290993*g + 0.439216*b + 128;
+        char v2= 0.439216*r - 0.367788*g - 0.071427*b + 128;
         yuv_pic[offset + k] = u2;
         yuv_pic[offset + k + width*height/4] = v2;
     }
@@ -24,13 +30,19 @@ void convert(char *yuv_pic, char y, char u, char v, int width, int height,int of
 
 void convert_add(char *yuv_pic, char y, char y_, char u, char u_, char v, char v_, int width, int height,int offset,int i, int k, int alpha, int cnt) {
     float r,g,b,r_,g_,b_;
-    r = y+1.140*v;
+    /*r = y+1.140*v;
     g = y-0.394*u-0.581*v;
-    b = y+2.032*u;
+    b = y+2.032*u;*/
+    r = 1.164383 * (y - 16) + 1.596027*(v - 128);
+    b = 1.164383 * (y - 16) + 2.017232*(u - 128);
+    g = 1.164383 * (y - 16) - 0.391762*(u - 128) - 0.812968*(v - 128);
     
-    r_ = y_+1.140*v_;
+    /*r_ = y_+1.140*v_;
     g_ = y_-0.394*u_-0.581*v_;
-    b_ = y_+2.032*u_;
+    b_ = y_+2.032*u_;*/
+    r_ = 1.164383 * (y_ - 16) + 1.596027*(v_ - 128);
+    b_ = 1.164383 * (y_ - 16) + 2.017232*(u_ - 128);
+    g_ = 1.164383 * (y_ - 16) - 0.391762*(u_ - 128) - 0.812968*(v_ - 128);
     //r = r>255? 255 : r<0 ? 0 : r;
     //g = g>255? 255 : g<0 ? 0 : g;
     //b = b>255? 255 : b<0 ? 0 : b;
@@ -38,12 +50,15 @@ void convert_add(char *yuv_pic, char y, char y_, char u, char u_, char v, char v
     g=(alpha*g+(256-alpha)*g_)/256;
     b=(alpha*b+(256-alpha)*b_)/256;
     
-    char y2 = 0.299*r+0.587*g+0.114*b;
+    //char y2 = 0.299*r+0.587*g+0.114*b;
+    char y2= 0.256788*r + 0.504129*g + 0.097906*b + 16;
     yuv_pic[i] = y2;
     //4 y blocks set one u and v
     if(cnt == 4){
-        char u2 = 0.492*(b-y2);
-        char v2 = 0.877*(r-y2);
+        //char u2 = 0.492*(b-y2);
+        //char v2 = 0.877*(r-y2);
+        char u2= -0.148223*r - 0.290993*g + 0.439216*b + 128;
+        char v2= 0.439216*r - 0.367788*g - 0.071427*b + 128;
         yuv_pic[offset + k] = u2;
         yuv_pic[offset + k + width*height/4] = v2;
     }
